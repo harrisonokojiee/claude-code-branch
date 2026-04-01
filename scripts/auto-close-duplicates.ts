@@ -178,7 +178,13 @@ async function autoCloseDuplicates(): Promise<void> {
       continue;
     }
 
-    const lastDupeComment = dupeComments[dupeComments.length - 1];
+    const lastDupeComment = dupeComments.at(-1);
+    if (!lastDupeComment) {
+      console.log(
+        `[DEBUG] Issue #${issue.number} - duplicate comment lookup returned no result, skipping`
+      );
+      continue;
+    }
     const dupeCommentDate = new Date(lastDupeComment.created_at);
     console.log(
       `[DEBUG] Issue #${
